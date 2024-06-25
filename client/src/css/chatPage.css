@@ -1,57 +1,52 @@
-.chat-page {
+/* body, html {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+  } */
+  
+  .chat-page {
+    height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-}
-
-.card {
-    border: none;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
-}
-
-.card-header {
-    background-color: #4d94ff; /* Blue header */
-    color: white;
-    border-bottom: none;
-}
-
-.card-body {
-    padding: 10px;
-    background-color: rgb(227, 225, 225);
-}
-
-.chat-window {
-    height: 400px; /* Adjust height as needed */
-    overflow-y: hidden;
-}
-
-.chat-messages {
-    height: 320px; /* Adjust max height to limit scroll area */
+    background-color: #2466a8;
+  }
+  
+  .card {
     width: 100%;
-    overflow-y: auto;
-}
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+  }
+  .card-header{
+    width: 100%;
+    height: 10%;
+    border-bottom: 3px solid #2466a8;
+    color: #2466a8;
+  }
+  
+  .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-window {
+    flex: 1;
+    overflow-y: hidden;
+    padding: 10px;
+  }
+  
+  .chat-messages{
+    display: flex;
+    flex-direction: column;
+    overflow:auto;
+    padding: 10px;
+  }
 
-.input-group {
-    margin-top: 10px;
-}
-.form-control:focus{
-    box-shadow: none;
-}
-
-.input-group-append button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background-color: #4d94ff; /* Blue send button */
-    border-color: #4d94ff;
-    color: white;
-}
-
-.input-group-append button:hover {
-    background-color: #2662b3; /* Darker blue on hover */
-    border-color: #2662b3;
-}
-
-.input-group-append button:focus {
-    box-shadow: 0 0 0 0.2rem rgba(77, 148, 255, 0.5); /* Light blue shadow on focus */
-}
+  .input-group {
+    margin-top: auto;
+  }
+  
