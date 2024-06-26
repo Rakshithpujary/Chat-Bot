@@ -11,7 +11,7 @@ const ChatBubble = ({ message, sender }) => (
       padding: '10px',
       borderRadius: '15px',
       marginBottom: '10px',
-      maxWidth: '50%',
+      maxWidth: '60%',
       alignSelf: sender === 'user' ? 'flex-end' : 'flex-start'
     }}
   >

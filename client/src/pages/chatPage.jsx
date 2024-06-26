@@ -33,21 +33,24 @@ const ChatPage = () => {
               <ChatBubble key={index} message={msg.text} sender={msg.sender} />
             ))}
           </div>
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              placeholder="Type a message..."
-              onKeyPress={e => e.key === 'Enter' && handleSend()}
-            />
-            <div className="input-group-append">
-              <button className="btn btn-primary" onClick={handleSend}>
-                Send
-              </button>
+          <div className='input-div'>
+            <div className="input-group ">
+                <input
+                    type="text"
+                    className="form-control"
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    placeholder="Type a message..."
+                    onKeyPress={e => e.key === 'Enter' && handleSend()}
+                />
+                <div className="input-group-append">
+                    <button className="btn btn-primary" onClick={handleSend}>
+                    Send
+                    </button>
+                </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
