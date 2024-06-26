@@ -11,43 +11,49 @@ const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [file, setfile] = useState(null);
+  const [img, setImg] = useState(null);
   const messagesEndRef = useRef(null);
 
-  const handlefileChange = (e) => {
-    setfile(e.target.files[0]);
+  const handleImgChange = (e) => {
+    setImg(e.target.files[0]);
   };
 
   const handleSend = async () => {
     setIsLoading(true);
-    if (input.trim() !== '') {
-      const newMessage = { text: input, sender: 'user' };
-      setMessages([...messages, newMessage]);
 
-      const formData = new FormData();
-      formData.append('prompt_text', input);
-      if (file) {
-        formData.append('prompt_file', file);
-      }
+    const newMessage = { text: input, sender: 'user' };
+    setMessages([...messages, newMessage]);
 
-      // clear inputs
-      setInput('');
-      setfile(null);
-      try {
-        const response = await axios.post('http://localhost:5000/api/chat-gemini', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+    const formData = new FormData();
+    formData.append('prompt_text', input);
+    if (img) {
+      formData.append('prompt_img', img);
+    }
 
-        const botResponse = { text: response.data.response, sender: 'bot' };
+    // clear inputs
+    setInput('');
+    setImg(null);
+    try {
+      const response = await axios.post('http://localhost:5000/api/chat-gemini', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const botResponse = { text: response.data.response, sender: 'bot' };
+      setMessages(prevMessages => [...prevMessages, botResponse]);
+
+    } catch (error) {
+      if(error.response.data.errorMsg) {
+        const botResponse = { text: error.response.data.errorMsg, sender: 'botError' };
         setMessages(prevMessages => [...prevMessages, botResponse]);
-
-      } catch (error) {
-        console.error('Error uploading file and text:', error);
-      } finally {
-        setIsLoading(false);
+      } else {
+        // toast message here
       }
+      console.error('Error uploading file and text:', error);
+    } finally {
+
+      setIsLoading(false);
     }
   };
 
@@ -74,7 +80,7 @@ const ChatPage = () => {
           </div>
           <div className='input-div'>
           <div className="input-group-div">
-                <input type="file" id="prompt_img" onChange={handlefileChange} />
+                <input type="file" id="prompt_img" onChange={handleImgChange} />
             
                 <input
                     type="text"
@@ -86,7 +92,6 @@ const ChatPage = () => {
                 />
 
                 {/* File Input */}
-
                 <button className="btn btn-primary" onClick={handleSend} disabled={!input.trim()}>
                     {isLoading ? <FontAwesomeIcon icon={faSpinner} spin size='1x'/>: 'Send'}
                 </button>

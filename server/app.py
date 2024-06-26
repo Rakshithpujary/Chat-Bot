@@ -34,7 +34,7 @@ def chatGemini():
             filename = prompt_img.filename
             # Check if proper image extension
             if '.' not in filename or filename.rsplit('.', 1)[1].lower() not in allowed_extensions:
-                return jsonify({'errorMsg': 'File extension not allowed'}), 400
+                return jsonify({'errorMsg': 'I am sorry, i dont support this file extension.'}), 400
 
             # retreive image in proper format so that gemini can handle
             prompt_img, file_path = handleImage(prompt_img)
@@ -44,7 +44,7 @@ def chatGemini():
         return jsonify({"response": response_text})
     except Exception as e:
         print(f"Error occurred while chatting with Gemini:\n{e}")
-        return jsonify({'errorMsg': "Something went wrong"}), 400
+        return jsonify({'errorMsg': "Something went wrong, Please Try again!"}), 400
     finally:
         # delete saved file if exists
         if prompt_img and os.path.exists(file_path):
