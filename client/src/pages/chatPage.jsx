@@ -5,6 +5,7 @@ import '../css/chatPage.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { MdOutlineUploadFile } from "react-icons/md";
 
 const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +73,9 @@ const ChatPage = () => {
             <div ref={messagesEndRef} />
           </div>
           <div className='input-div'>
-            <div className="input-group ">
+          <div className="input-group-div">
+                <input type="file" id="prompt_img" onChange={handlefileChange} />
+            
                 <input
                     type="text"
                     className="form-control"
@@ -83,14 +86,10 @@ const ChatPage = () => {
                 />
 
                 {/* File Input */}
-                <label htmlFor="prompt_img">file:</label>
-                <input type="file" id="prompt_img" onChange={handlefileChange} />
 
-                <div className="input-group-append">
-                    <button className="btn btn-primary" onClick={handleSend}>
+                <button className="btn btn-primary" onClick={handleSend} disabled={!input.trim()}>
                     {isLoading ? <FontAwesomeIcon icon={faSpinner} spin size='1x'/>: 'Send'}
-                    </button>
-                </div>
+                </button>
             </div>
           </div>
           
