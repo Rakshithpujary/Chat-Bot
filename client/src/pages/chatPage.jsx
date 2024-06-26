@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChatBubble from '../components/ChatBubble';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/chatPage.css';
@@ -6,6 +6,7 @@ import '../css/chatPage.css';
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const messagesEndRef = useRef(null);
 
   const handleSend = () => {
     if (input.trim() !== '') {
@@ -21,6 +22,14 @@ const ChatPage = () => {
     }
   };
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div className="chat-page">
       <div className="card">
@@ -28,10 +37,11 @@ const ChatPage = () => {
           <h1>Chat-Bot</h1>
         </div>
         <div className="card-body chat-window">
-          <div className="chat-messages">
+            <div className="chat-messages">
             {messages.map((msg, index) => (
               <ChatBubble key={index} message={msg.text} sender={msg.sender} />
             ))}
+            <div ref={messagesEndRef} />
           </div>
           <div className='input-div'>
             <div className="input-group ">
