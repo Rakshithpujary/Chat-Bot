@@ -46,6 +46,14 @@
     overflow:auto;
     padding: 10px;
   }
+  .chat-messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #2466a8;
+    border-radius: 5px;
+}
 
   .input-div{
     display: flex;
