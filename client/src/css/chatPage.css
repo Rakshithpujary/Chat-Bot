@@ -63,25 +63,28 @@
     width: 100%;
   }
 
-  .input-group {
-   width: 50%;
-
+  .input-group-div{
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid  #2466a8;
   }
 
+  .upload-icon{
+    font-size: 40px;
+  }
 
   .form-control{
-    height: 70px;
-    overflow-y: auto;
+    background-color: black;
     word-wrap: break-word;
-  }
-
-  .btn{
-    width: 250%;
-    height: 70px;
+    border: none;
   }
 
   .form-control:focus{
     box-shadow: none;
+    background-color: black;
 
   }
   
