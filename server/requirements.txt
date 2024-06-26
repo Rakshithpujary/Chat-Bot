@@ -1,0 +1,7 @@
+Flask
+google-generativeai
+Flask-Cors
+python-dotenv
+
+# Paste in terminal
+# pip install -r requirements.txt

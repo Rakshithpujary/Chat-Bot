@@ -2,23 +2,52 @@ import React, { useState, useEffect, useRef } from 'react';
 import ChatBubble from '../components/ChatBubble';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/chatPage.css';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { MdOutlineUploadFile } from "react-icons/md";
 
 const ChatPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [file, setfile] = useState(null);
   const messagesEndRef = useRef(null);
 
-  const handleSend = () => {
+  const handlefileChange = (e) => {
+    setfile(e.target.files[0]);
+  };
+
+  const handleSend = async () => {
+    setIsLoading(true);
     if (input.trim() !== '') {
       const newMessage = { text: input, sender: 'user' };
       setMessages([...messages, newMessage]);
-      setInput('');
 
-      // Simulate bot response after a short delay (for demonstration purposes)
-      setTimeout(() => {
-        const botResponse = { text: 'This is a simulated response.', sender: 'bot' };
+      const formData = new FormData();
+      formData.append('prompt_text', input);
+      if (file) {
+        formData.append('prompt_file', file);
+      }
+
+      // clear inputs
+      setInput('');
+      setfile(null);
+      try {
+        const response = await axios.post('http://localhost:5000/api/chat-gemini', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const botResponse = { text: response.data.response, sender: 'bot' };
         setMessages(prevMessages => [...prevMessages, botResponse]);
-      }, 500);
+
+      } catch (error) {
+        console.error('Error uploading file and text:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -44,7 +73,9 @@ const ChatPage = () => {
             <div ref={messagesEndRef} />
           </div>
           <div className='input-div'>
-            <div className="input-group ">
+          <div className="input-group-div">
+                <input type="file" id="prompt_img" onChange={handlefileChange} />
+            
                 <input
                     type="text"
                     className="form-control"
@@ -53,11 +84,12 @@ const ChatPage = () => {
                     placeholder="Type a message..."
                     onKeyPress={e => e.key === 'Enter' && handleSend()}
                 />
-                <div className="input-group-append">
-                    <button className="btn btn-primary" onClick={handleSend}>
-                    Send
-                    </button>
-                </div>
+
+                {/* File Input */}
+
+                <button className="btn btn-primary" onClick={handleSend} disabled={!input.trim()}>
+                    {isLoading ? <FontAwesomeIcon icon={faSpinner} spin size='1x'/>: 'Send'}
+                </button>
             </div>
           </div>
           
