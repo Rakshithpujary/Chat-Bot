@@ -6,17 +6,29 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MdOutlineUploadFile } from "react-icons/md";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [img, setImg] = useState(null);
+  const [imgPreview,setImgPreview] = useState(null);
+  const [isImgUploadVisible, setIsImgUploadVisible] = useState(false);
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   const handleImgChange = (e) => {
     setImg(e.target.files[0]);
+    setIsImgUploadVisible(true)
   };
+
+  useEffect(()=>{
+    if(img === null) return;
+    const imageUrl = URL.createObjectURL(img);
+    setImgPreview(imageUrl);
+    setIsImgUploadVisible(true);
+  },[img]);
 
   const handleSend = async () => {
     setIsLoading(true);
@@ -33,6 +45,9 @@ const ChatPage = () => {
     // clear inputs
     setInput('');
     setImg(null);
+    setImgPreview(null);
+    setIsImgUploadVisible(false);
+    
     try {
       const response = await axios.post('http://localhost:5000/api/chat-gemini', formData, {
         headers: {
@@ -65,6 +80,12 @@ const ChatPage = () => {
     scrollToBottom();
   }, [messages]);
 
+  const handleRemoveImage = () => {
+    setImg(null);
+    setImgPreview(null);
+    setIsImgUploadVisible(false);
+  };
+
   return (
     <div className="chat-page">
       <div className="card">
@@ -80,8 +101,25 @@ const ChatPage = () => {
           </div>
           <div className='input-div'>
           <div className="input-group-div">
-                <input type="file" id="prompt_img" onChange={handleImgChange} />
-            
+            {!isImgUploadVisible && (
+                <MdOutlineUploadFile className='upload-icon' onClick={() => fileInputRef.current.click()} />
+              )}
+                <input 
+                type="file" 
+                id="prompt_img" 
+                onChange={handleImgChange} 
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                accept="image/*" // This attribute allows only image files to be selected
+                />
+
+                {isImgUploadVisible && (
+                  <div className='preview-image-div'>
+                    <img src={imgPreview} alt="File Preview" className="preview-image" />
+                    <IoMdCloseCircleOutline className='close-icon' onClick={() => { setImg(null); setImgPreview(null); setIsImgUploadVisible(false); }} />
+                  </div>
+                )}
+
                 <input
                     type="text"
                     className="form-control"
