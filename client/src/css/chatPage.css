@@ -78,6 +78,7 @@
   .upload-icon{
     font-size: 30px;
     cursor: pointer;
+    color: white;
   }
 
   .form-control{
@@ -130,7 +131,7 @@
     display: none;
   }
 
-  .preview-image-div:hover .close-icon {
+  .close-icon {
     display: block;
   }
   

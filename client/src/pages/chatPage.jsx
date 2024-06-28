@@ -128,7 +128,7 @@ const ChatPage = () => {
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     placeholder="Type a message..."
-                    onKeyPress={e => e.key === 'Enter' && handleSend()}
+                    // onKeyPress={e => e.key === 'Enter' && handleSend()}
                 />
 
                 {/* File Input */}
