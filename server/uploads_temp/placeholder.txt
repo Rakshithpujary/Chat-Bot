@@ -1,0 +1,1 @@
+Do not delete this file nor folder, it used to store images sent from client side for an temperory time.

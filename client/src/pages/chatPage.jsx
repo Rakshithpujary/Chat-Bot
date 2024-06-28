@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { MdOutlineUploadFile } from "react-icons/md";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { toast } from 'react-toastify';
+import { toastErrorStyle } from '../components/utils/toastStyle';
 
 const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,11 +44,13 @@ const ChatPage = () => {
       formData.append('prompt_img', img);
     }
 
-    // clear inputs
+    // clear inputs and references
     setInput('');
     setImg(null);
     setImgPreview(null);
     setIsImgUploadVisible(false);
+    if (fileInputRef.current)
+      fileInputRef.current.value = '';
     
     try {
       const response = await axios.post('http://localhost:5000/api/chat-gemini', formData, {
@@ -59,15 +63,14 @@ const ChatPage = () => {
       setMessages(prevMessages => [...prevMessages, botResponse]);
 
     } catch (error) {
-      if(error.response.data.errorMsg) {
+      if (error.response && error.response.data && error.response.data.errorMsg) {
         const botResponse = { text: error.response.data.errorMsg, sender: 'botError' };
         setMessages(prevMessages => [...prevMessages, botResponse]);
-      } else {
-        // toast message here
-      }
-      console.error('Error uploading file and text:', error);
-    } finally {
+      } else
+        toast.error(error.message || error, toastErrorStyle());
 
+      console.error('Error uploading file and text:', error.message || error);
+    } finally {
       setIsLoading(false);
     }
   };
