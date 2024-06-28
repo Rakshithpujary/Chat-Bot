@@ -9,6 +9,7 @@ import { MdOutlineUploadFile } from "react-icons/md";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { toast } from 'react-toastify';
 import { toastErrorStyle } from '../components/utils/toastStyle';
+import FloatinfDownBtn from '../components/utils/FloatingBtn';
 
 const ChatPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,7 @@ const ChatPage = () => {
   const [isImgUploadVisible, setIsImgUploadVisible] = useState(false);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
 
   const handleImgChange = (e) => {
     setImg(e.target.files[0]);
@@ -33,6 +35,7 @@ const ChatPage = () => {
   },[img]);
 
   const handleSend = async () => {
+    if (isLoading) return;
     setIsLoading(true);
 
     const newMessage = { text: input, sender: 'user' };
@@ -62,6 +65,7 @@ const ChatPage = () => {
       const botResponse = { text: response.data.response, sender: 'bot' };
       setMessages(prevMessages => [...prevMessages, botResponse]);
 
+      // throw new Error("fdfdfd   dfdfdfdf");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errorMsg) {
         const botResponse = { text: error.response.data.errorMsg, sender: 'botError' };
@@ -91,6 +95,30 @@ const ChatPage = () => {
       fileInputRef.current.value = '';
   };
 
+  const handleInputKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+
+      if((input.trim()).length === 0) {
+        setInput('');
+        return;
+      }
+      handleSend();
+    }
+  };
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 72)}px`; // 72px = 3 * 24px (approx height of one row)
+    }
+  };
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [input]);
+
   return (
     <div className="chat-page">
       <div className="card">
@@ -103,6 +131,9 @@ const ChatPage = () => {
               <ChatBubble key={index} message={msg.text} sender={msg.sender} />
             ))}
             <div ref={messagesEndRef} />
+
+            <FloatinfDownBtn/>
+
           </div>
           <div className='input-div'>
           <div className="input-group-div">
@@ -110,12 +141,12 @@ const ChatPage = () => {
                 <MdOutlineUploadFile className='upload-icon' onClick={() => fileInputRef.current.click()} />
               )}
                 <input 
-                type="file" 
-                id="prompt_img" 
-                onChange={handleImgChange} 
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-                accept="image/*" // This attribute allows only image files to be selected
+                  type="file" 
+                  id="prompt_img" 
+                  onChange={handleImgChange} 
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  accept="image/*" 
                 />
 
                 {isImgUploadVisible && (
@@ -125,17 +156,17 @@ const ChatPage = () => {
                   </div>
                 )}
 
-                <input
-                    type="text"
-                    className="form-control"
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    placeholder="Type a message..."
-                    // onKeyPress={e => e.key === 'Enter' && handleSend()}
+                <textarea
+                  className="form-control auto-resize-textarea"
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  placeholder="Type a message..."
+                  onKeyPress={handleInputKeyPress}
+                  rows="1"
+                  style={{ overflowY: 'auto' }}
+                  ref={textareaRef} // Add this ref for the textarea
                 />
-
-                {/* File Input */}
-                <button className="btn btn-primary" onClick={handleSend} disabled={!input.trim()}>
+                <button className="btn btn-primary" onClick={handleSend} disabled={!input.trim() || isLoading}>
                     {isLoading ? <FontAwesomeIcon icon={faSpinner} spin size='1x'/>: 'Send'}
                 </button>
             </div>

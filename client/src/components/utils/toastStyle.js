@@ -38,8 +38,8 @@ export const toastErrorStyle = () => {
     draggable: true,
     progress: undefined,
     style: {
-      background: '#F5F5F5',
-      color: '#000',
+      background: '#000',
+      color: ' rgba(255, 75, 43, 0.4)',
       fontWeight: 'bold',
       fontSize: '18px',
       fontFamily: 'Arial, sans-serif',
@@ -49,7 +49,7 @@ export const toastErrorStyle = () => {
       justifyContent: 'space-between',
       padding: '7px',
       borderRadius: '20px',
-      boxShadow: '0px 10px 20px rgba(255, 75, 43, 0.4)'
+      boxShadow: '0px 5px 5px rgba(255, 75, 43, 0.4)'
     },
     icon: <FcCancel style={{ color: '#FCAF45', width: '60px', height: '55px' }} />
   };

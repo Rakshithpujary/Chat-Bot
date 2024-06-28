@@ -95,17 +95,42 @@
     font-size: 15px;
 
   }
+  .form-control:not(:focus) {
+    color: white; 
+  }
+  
 
 
   .form-control::placeholder{
     color: rgb(168, 168, 168);
     font-size: 15px;
   }
+
+  .auto-resize-textarea{
+    resize: none;
+    max-height: 72px; /* Maximum height for 3 rows */
+    overflow-y: auto;
+  }
   
+
+  .auto-resize-textarea::-webkit-scrollbar {
+    width: 5px;
+}
+
+.auto-resize-textarea::-webkit-scrollbar-thumb {
+    background: #2466a8;
+    border-radius: 5px;
+}
+
   .btn{
     width: 20%;
     /* max-height: 50px; */
     cursor: pointer;
+    margin-left: 10px;
+  }
+  .btn:hover{
+    background-color: rgb(5, 47, 136); 
+    transition: 'background-color 0.3 ease-in-out';
   }
 
   .preview-image-div{
@@ -133,5 +158,15 @@
 
   .close-icon {
     display: block;
+  }
+
+  @media (max-width:700px)
+  {
+    .input-group-div{
+      width: 100%;
+    }
+    .btn{
+      width: 30%;
+    }
   }
   
