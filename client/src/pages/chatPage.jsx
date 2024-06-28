@@ -84,6 +84,8 @@ const ChatPage = () => {
     setImg(null);
     setImgPreview(null);
     setIsImgUploadVisible(false);
+    if (fileInputRef.current)
+      fileInputRef.current.value = '';
   };
 
   return (
@@ -116,7 +118,7 @@ const ChatPage = () => {
                 {isImgUploadVisible && (
                   <div className='preview-image-div'>
                     <img src={imgPreview} alt="File Preview" className="preview-image" />
-                    <IoMdCloseCircleOutline className='close-icon' onClick={() => { setImg(null); setImgPreview(null); setIsImgUploadVisible(false); }} />
+                    <IoMdCloseCircleOutline className='close-icon' onClick={handleRemoveImage} />
                   </div>
                 )}
 

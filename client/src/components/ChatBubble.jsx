@@ -42,12 +42,13 @@ const ChatBubble = ({ message, sender }) => {
         alignSelf: sender === 'user' ? 'flex-end' : 'flex-start',
         backgroundColor: backgroundColor,
         color: textColor,
-        boxShadow: isHovered ? `0 4px 10px ${backgroundColor}` : 'none', // Box shadow based on hover state
+       boxShadow: isHovered ? `0 2px 10px ${backgroundColor}` : 'none', // Box shadow based on hover state
+      //  boxShadow:`0px 2px 10px ${backgroundColor}`,
         cursor: 'pointer', // Optional: Change cursor on hover
-        transition: 'box-shadow 0.3s ease-in-out' 
+       transition: 'box-shadow 0.3s ease-in-out' 
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      // onMouseEnter={() => setIsHovered(true)}
+      // onMouseLeave={() => setIsHovered(false)}
     >
       <Markdown style={{ margin: '0px' }}>{message}</Markdown>
     </motion.div>
