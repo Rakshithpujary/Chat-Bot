@@ -49,6 +49,16 @@ def handleImage(prompt_img):
 
 def callGemini(prompt_text, prompt_img):
 
+    boundary_text = (
+        "Below is a prompt. Your task is to reply to the prompt. "
+        "Ensure the prompt is strictly related to the study of entrance "
+        "or competitive exams in India.\nPrompt: \n"
+    )
+
+    # boundary_text = " hi, "
+    
+    prompt_text = boundary_text + prompt_text
+
     response = ""
     if prompt_img is None:
         response = g.chat.send_message(prompt_text) # if user did not send img, then send only text to gemini
