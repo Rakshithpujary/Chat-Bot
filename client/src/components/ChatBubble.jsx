@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
+import '../css/ChatBubble.css';
 
 const ChatBubble = ({ message, sender, img = null }) => {
   // Determine the background color based on the sender

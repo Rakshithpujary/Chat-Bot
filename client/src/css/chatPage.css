@@ -164,22 +164,6 @@
     display: block;
   }
 
-  .scroll-to-bottom-float-btn-custom {
-    position: fixed;
-    background-color: #2466a8;
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 10;
-    bottom: 3%;
-    right: 2.5%;
-}
-
   @media (max-width:700px)
   {
     .input-group-div{
@@ -188,13 +172,5 @@
     .btn{
       width: 30%;
     }
-    .chat-bubble {
-      min-width: 90%;
-    }
-
-  .scroll-to-bottom-float-btn-custom {
-      bottom: 10%;
-      right: 4%;
-    }
-  }
+}
   
