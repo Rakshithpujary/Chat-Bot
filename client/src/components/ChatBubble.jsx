@@ -60,7 +60,7 @@ const ChatBubble = ({ message, sender, img = null }) => {
       >
         {
           img && sender === 'user' &&
-            <div className='img-div'>
+            <div className='img-container'>
               <img key={`${Date.now()}-${Math.random()}`} src={img} alt="img" 
               className='responsive-img'
               style={{borderRadius: '10px', 
