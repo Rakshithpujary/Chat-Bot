@@ -33,9 +33,9 @@ const ChatBubble = ({ message, sender, img = null }) => {
       shadowColor="#ff0000b5"
       break;
     default:
-      backgroundColor = 'gray';
-      textColor = 'black';
-      shadowColor="white"
+      backgroundColor = 'red';
+      textColor = 'white';
+      shadowColor="#ff0000b5"
   }
 
   // State to track hover state
