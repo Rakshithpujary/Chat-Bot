@@ -7,7 +7,7 @@ const FloatingScrollBtn = () => {
   const toggleVisibility = () => {
     const chatWindow = document.querySelector('.chat-messages');
     if (chatWindow) {
-      if (chatWindow.scrollTop < chatWindow.scrollHeight - chatWindow.clientHeight - 200) {
+      if (chatWindow.scrollTop < chatWindow.scrollHeight - chatWindow.clientHeight - 300) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -37,22 +37,10 @@ const FloatingScrollBtn = () => {
 
   return (
     <div
-      className="scroll-to-bottom-float-btn"
+      className="scroll-to-bottom-float-btn-custom"
       onClick={scrollToBottom}
       style={{
         display: isVisible ? 'flex' : 'none',
-        position: 'fixed',
-        bottom: '20px',
-        right: '25px',
-        backgroundColor: '#2466a8',
-        color: 'white',
-        borderRadius: '50%',
-        width: '40px',
-        height: '40px',
-        justifyContent: 'center',
-        alignItems: 'center',
-        cursor: 'pointer',
-        zIndex: 1000,
       }}
     >
       <ImArrowDown2 />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ChatBubble from '../components/ChatBubble';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/chatPage.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
