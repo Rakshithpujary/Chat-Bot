@@ -16,7 +16,7 @@ const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [img, setImg] = useState(null);
-  const [imgPreview,setImgPreview] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null);
   const [isImgUploadVisible, setIsImgUploadVisible] = useState(false);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -38,7 +38,7 @@ const ChatPage = () => {
     if (isLoading) return;
     setIsLoading(true);
 
-    const newMessage = { text: input, sender: 'user' };
+    const newMessage = { text: input, sender: 'user', img : imgPreview };
     setMessages([...messages, newMessage]);
 
     const formData = new FormData();
@@ -50,11 +50,11 @@ const ChatPage = () => {
     // clear inputs and references
     setInput('');
     setImg(null);
-    setImgPreview(null);
     setIsImgUploadVisible(false);
+    setImgPreview(null);
     if (fileInputRef.current)
       fileInputRef.current.value = '';
-    
+
     try {
       const response = await axios.post('http://localhost:5000/api/chat-gemini', formData, {
         headers: {
@@ -128,7 +128,7 @@ const ChatPage = () => {
         <div className="card-body chat-window">
             <div className="chat-messages">
             {messages.map((msg, index) => (
-              <ChatBubble key={index} message={msg.text} sender={msg.sender} />
+              <ChatBubble key={index} message={msg.text} sender={msg.sender} img={msg.img}/>
             ))}
             <div ref={messagesEndRef} />
 
